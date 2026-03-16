@@ -1,4 +1,4 @@
-# Desafio Técnico IBGE - Flask + Arquitetura em Camadas
+# Desafio Técnico
 
 Projeto desenvolvido para resolver o desafio técnico com foco em:
 
@@ -194,9 +194,3 @@ Colunas geradas:
 - **Resiliência**:
   - falha no IBGE gera linhas com `ERRO_API`;
   - token ausente não quebra o processamento, apenas impede o envio.
-
-## Melhorias futuras
-
-- testes unitários para `matching_service` e `stats_service`;
-- retry/backoff para chamadas HTTP;
-- cache local da base de municípios do IBGE para reduzir latência.

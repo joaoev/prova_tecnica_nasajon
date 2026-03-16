@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from flask import Flask
+from flask import jsonify
 
 from src.config.settings import load_settings
 from src.controllers.challenge_controller import ChallengeController
-from src.controllers.home_controller import HomeController
 from src.repositories.correction_repository import CorrectionRepository
 from src.repositories.ibge_repository import IbgeRepository
 from src.repositories.supabase_auth_repository import SupabaseAuthRepository
@@ -30,12 +30,14 @@ def create_app() -> Flask:
         fuzzy_cutoff=settings.fuzzy_cutoff,
     )
 
-    home_controller = HomeController()
     challenge_controller = ChallengeController(challenge_service, auth_repository)
 
     app = Flask(__name__)
 
-    app.add_url_rule("/", view_func=home_controller.index, methods=["GET"])
+    @app.get("/")
+    def health() -> tuple[dict[str, str], int]:
+        return jsonify({"status": "ok"}), 200
+
     app.add_url_rule("/api/challenge/run", view_func=challenge_controller.run, methods=["POST"])
 
     return app
